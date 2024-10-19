@@ -76,11 +76,23 @@ export const useBoardContext = () => {
 		});
 	};
 
+	/**
+	 * Updates the cell map in the board.
+	 * @param {CellType[][]} cellMap - The new cell map
+	 */
+	const updateCellMap = (cellMap: CellType[][]) => {
+		dispatch({
+			type: boardActions.UPDATE_CELL_MAP,
+			payload: cellMap,
+		});
+	};
+
 	return {
 		noOfCells,
 		noOfMines,
 		cellMap,
 		updateNoOfCells,
 		updateNoOfMines,
+		updateCellMap,
 	};
 };
