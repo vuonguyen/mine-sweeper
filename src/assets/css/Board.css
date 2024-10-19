@@ -24,3 +24,57 @@
 	font-size: 16px;
 	cursor: pointer;
 }
+
+/* Add these new styles for the board header */
+.board-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #c0c0c0;
+	border: 3px solid;
+	border-top-color: #ffffff;
+	border-right-color: #7b7b7b;
+	border-bottom-color: #7b7b7b;
+	border-left-color: #ffffff;
+	padding: 5px;
+	margin-bottom: 6px;
+}
+
+.counter,
+.timer {
+	background-color: #000;
+	color: #ff0000;
+	font-family: "Digital", sans-serif;
+	font-size: 24px;
+	padding: 2px 5px;
+	border: 2px inset #808080;
+}
+
+.reset-button {
+	width: 36px;
+	height: 36px;
+	background-color: #c0c0c0;
+	border: 3px solid;
+	border-top-color: #ffffff;
+	border-right-color: #7b7b7b;
+	border-bottom-color: #7b7b7b;
+	border-left-color: #ffffff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.reset-button:focus {
+	outline: none;
+	/* box-shadow: 0 0 0 2px #0000ff; */
+}
+
+.reset-button:active {
+	border-top-color: #7b7b7b;
+	border-right-color: #ffffff;
+	border-bottom-color: #ffffff;
+	border-left-color: #7b7b7b;
+	background-color: #b0b0b0;
+}

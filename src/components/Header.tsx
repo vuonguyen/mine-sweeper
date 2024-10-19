@@ -1,9 +1,8 @@
-import "../assets/css/Header.css";
-import { useContext } from "react";
-import { BoardContext } from "./ulti/context";
+import "@/assets/css/Header.css";
+import { useBoardContext, GameLevels } from "@/ulti";
 
 export default function Header() {
-	const { noOfRows, setNoOfRows } = useContext(BoardContext);
+	const { noOfCells, updateNoOfCells, updateNoOfMines } = useBoardContext();
 
 	return (
 		<header className='header'>
@@ -11,15 +10,18 @@ export default function Header() {
 			<div className='no-of-rows'>
 				<span>Choose your level</span>
 				<div className='level-selector'>
-					<button className='btn' onClick={() => setNoOfRows(9)}>
-						Easy
-					</button>
-					<button className='btn' onClick={() => setNoOfRows(16)}>
-						Medium
-					</button>
-					<button className='btn' onClick={() => setNoOfRows(24)}>
-						Hard
-					</button>
+					{GameLevels.map((level) => (
+						<button
+							key={level.name}
+							className={`btn ${noOfCells === level.rows ? "active" : ""}`}
+							onClick={() => {
+								updateNoOfCells(level.rows);
+								updateNoOfMines(level.mines);
+							}}
+						>
+							{level.name}
+						</button>
+					))}
 				</div>
 			</div>
 		</header>
