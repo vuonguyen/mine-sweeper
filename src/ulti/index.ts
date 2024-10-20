@@ -12,4 +12,4 @@ export {
 export { BoardContext } from "./context";
 
 //hooks
-export { useSetupCellMap, useBoardReducer, useBoardContext } from "./hooks";
+export { useBoardReducer, useBoardContext } from "./hooks";

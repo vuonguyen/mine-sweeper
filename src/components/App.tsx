@@ -1,21 +1,19 @@
 import "../assets/css/App.css";
 import { Header, Board } from ".";
-import { BoardContext, useBoardReducer } from "@/ulti";
+import { BoardContext, useBoardReducer, initBoard } from "@/ulti";
 import { BoardDefaultStateType, CellType } from "@/ulti/types";
 
 const initialBoardStateValue: BoardDefaultStateType = {
 	noOfCells: 9 as number,
 	noOfMines: 10 as number,
-	cellMap: [] as CellType[][],
+	cellMap: initBoard(9, 10) as CellType[][],
 };
 
 function App() {
 	const { boardState, dispatch } = useBoardReducer(initialBoardStateValue);
 
-	const { noOfCells, noOfMines, cellMap } = boardState;
-
 	return (
-		<BoardContext.Provider value={{ noOfCells, noOfMines, cellMap, dispatch }}>
+		<BoardContext.Provider value={{ ...boardState, dispatch }}>
 			<Header />
 			<Board />
 		</BoardContext.Provider>

@@ -1,15 +1,15 @@
-import { useState, useReducer, useContext } from "react";
+import { useReducer, useContext } from "react";
 import { BoardDefaultStateType, CellType, BoardActionType } from "./types";
-import { boardActions, BoardContext, initBoard } from "@/ulti";
+import { boardActions, BoardContext } from "@/ulti";
 
-export const useSetupCellMap = (noOfCells: number, noOfMines: number) => {
-	const [board, setBoard] = useState<CellType[][]>(() =>
-		initBoard(noOfCells, noOfMines)
-	);
-	const [isGameStarted, setIsGameStarted] = useState(false);
+// export const useSetupCellMap = (noOfCells: number, noOfMines: number) => {
+// 	const [board, setBoard] = useState<CellType[][]>(() =>
+// 		initBoard(noOfCells, noOfMines)
+// 	);
+// 	const [isGameStarted, setIsGameStarted] = useState(false);
 
-	return { board, isGameStarted, setIsGameStarted, setBoard };
-};
+// 	return { board, isGameStarted, setIsGameStarted, setBoard };
+// };
 
 /**
  * Custom hook to manage the board state using a reducer.

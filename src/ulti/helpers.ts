@@ -29,7 +29,10 @@ export const setDefaultBoard = (noOfCells: number): CellType[][] => {
 	return board;
 };
 
-export const initBoard = (noOfCells: number, noOfMines: number) => {
+export const initBoard = (
+	noOfCells: number,
+	noOfMines: number
+): CellType[][] => {
 	const newBoard: CellType[][] = setDefaultBoard(noOfCells);
 
 	console.log("in initi");

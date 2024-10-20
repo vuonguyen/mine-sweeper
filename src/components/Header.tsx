@@ -1,7 +1,8 @@
+import { memo, useCallback } from "react";
 import "@/assets/css/Header.css";
 import { useBoardContext, GameLevels, initBoard } from "@/ulti";
 
-export default function Header() {
+const Header = memo(function Header() {
 	const { noOfCells, updateNoOfCells, updateNoOfMines, updateCellMap } =
 		useBoardContext();
 	/**
@@ -13,11 +14,14 @@ export default function Header() {
 	 * @param {number} level.mines - The number of mines for the new board
 	 */
 
-	const handleLevelChange = (level: { rows: number; mines: number }) => {
-		updateNoOfCells(level.rows);
-		updateNoOfMines(level.mines);
-		updateCellMap(initBoard(level.rows, level.mines));
-	};
+	const handleLevelChange = useCallback(
+		(level: { rows: number; mines: number }) => {
+			updateNoOfCells(level.rows);
+			updateNoOfMines(level.mines);
+			updateCellMap(initBoard(level.rows, level.mines));
+		},
+		[updateNoOfCells, updateNoOfMines, updateCellMap]
+	);
 
 	return (
 		<header className='header'>
@@ -40,4 +44,6 @@ export default function Header() {
 			</div>
 		</header>
 	);
-}
+});
+
+export default Header;
