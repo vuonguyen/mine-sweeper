@@ -3,6 +3,7 @@ import "@/assets/css/Header.css";
 import { useBoardContext, GameLevels, initBoard } from "@/ulti";
 
 const Header = memo(function Header() {
+	console.log("header rendered");
 	const { noOfCells, updateNoOfCells, updateNoOfMines, updateCellMap } =
 		useBoardContext();
 	/**
