@@ -5,7 +5,7 @@ import { BoardBody, BoardHeader } from "@/components";
 
 export default function Board() {
 	//get the no of cells and mines from the context
-	const { noOfCells, noOfMines, cellMap } = useBoardContext();
+	const { noOfMines, cellMap, gameStatus, gameId } = useBoardContext();
 	const [minesLeft, setMinesLeft] = useState(noOfMines);
 
 	if (!cellMap.length)
@@ -18,10 +18,10 @@ export default function Board() {
 	return (
 		<section className='board'>
 			<BoardHeader noOfMines={minesLeft} />
+			{gameStatus === "lost" && <h3>Game Over, you lost!</h3>}
+			{gameStatus === "won" && <h3>Game Over, you won!</h3>}
 			<BoardBody
-				//add a key here to force the BoardBody to re-render with a new state
-				//if we dont do that the BoardBody will be re-rendered but the state will stay the same and wont update the board
-				key={`${cellMap.length}-${noOfCells}-${noOfMines}`}
+				key={gameId}
 				cellMap={cellMap}
 				setMinesLeft={setMinesLeft}
 				minesLeft={minesLeft}

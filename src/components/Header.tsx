@@ -3,9 +3,13 @@ import "@/assets/css/Header.css";
 import { useBoardContext, GameLevels, initBoard } from "@/ulti";
 
 const Header = memo(function Header() {
-	console.log("header rendered");
-	const { noOfCells, updateNoOfCells, updateNoOfMines, updateCellMap } =
-		useBoardContext();
+	const {
+		noOfCells,
+		updateNoOfCells,
+		updateNoOfMines,
+		updateCellMap,
+		updateGameStatus,
+	} = useBoardContext();
 	/**
 	 * Handles the change of game level.
 	 * Updates the number of cells, mines, and initializes a new board based on the selected level.
@@ -20,8 +24,9 @@ const Header = memo(function Header() {
 			updateNoOfCells(level.rows);
 			updateNoOfMines(level.mines);
 			updateCellMap(initBoard(level.rows, level.mines));
+			updateGameStatus("playing");
 		},
-		[updateNoOfCells, updateNoOfMines, updateCellMap]
+		[updateNoOfCells, updateNoOfMines, updateCellMap, updateGameStatus]
 	);
 
 	return (

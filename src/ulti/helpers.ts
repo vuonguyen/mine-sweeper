@@ -10,6 +10,8 @@ export const boardActions = {
 	UPDATE_CELL_NO: "UPDATE_CELL_NO",
 	UPDATE_CELL_NO_OF_MINES: "UPDATE_CELL_NO_OF_MINES",
 	UPDATE_CELL_MAP: "UPDATE_CELL_MAP",
+	UPDATE_GAME_STATUS: "UPDATE_GAME_STATUS",
+	RESET_GAME: "RESET_GAME",
 };
 
 export const setDefaultBoard = (noOfCells: number): CellType[][] => {
@@ -34,8 +36,6 @@ export const initBoard = (
 	noOfMines: number
 ): CellType[][] => {
 	const newBoard: CellType[][] = setDefaultBoard(noOfCells);
-
-	console.log("in initi");
 
 	let minesPlaced = 0;
 

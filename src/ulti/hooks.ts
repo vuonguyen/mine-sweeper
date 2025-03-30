@@ -1,15 +1,12 @@
+import { v4 as uuidv4 } from "uuid";
 import { useReducer, useContext } from "react";
-import { BoardDefaultStateType, CellType, BoardActionType } from "./types";
-import { boardActions, BoardContext } from "@/ulti";
-
-// export const useSetupCellMap = (noOfCells: number, noOfMines: number) => {
-// 	const [board, setBoard] = useState<CellType[][]>(() =>
-// 		initBoard(noOfCells, noOfMines)
-// 	);
-// 	const [isGameStarted, setIsGameStarted] = useState(false);
-
-// 	return { board, isGameStarted, setIsGameStarted, setBoard };
-// };
+import {
+	BoardDefaultStateType,
+	CellType,
+	BoardActionType,
+	GameStatusType,
+} from "./types";
+import { boardActions, BoardContext, initBoard } from "@/ulti";
 
 /**
  * Custom hook to manage the board state using a reducer.
@@ -34,11 +31,35 @@ const boardReducer = (
 ): BoardDefaultStateType => {
 	switch (action.type) {
 		case boardActions.UPDATE_CELL_NO:
-			return { ...state, noOfCells: action.payload as number };
+			return {
+				...state,
+				gameId: uuidv4(),
+				noOfCells: action.payload as number,
+			};
 		case boardActions.UPDATE_CELL_NO_OF_MINES:
-			return { ...state, noOfMines: action.payload as number };
+			return {
+				...state,
+				gameId: uuidv4(),
+				noOfMines: action.payload as number,
+			};
 		case boardActions.UPDATE_CELL_MAP:
-			return { ...state, cellMap: action.payload as CellType[][] };
+			return {
+				...state,
+				gameId: uuidv4(),
+				cellMap: action.payload as CellType[][],
+			};
+		case boardActions.UPDATE_GAME_STATUS:
+			return {
+				...state,
+				gameStatus: action.payload as GameStatusType,
+			};
+		case boardActions.RESET_GAME:
+			return {
+				...state,
+				gameId: uuidv4(),
+				cellMap: initBoard(state.noOfCells, state.noOfMines),
+				gameStatus: "playing",
+			};
 		default:
 			return state;
 	}
@@ -55,7 +76,8 @@ const boardReducer = (
  *   - updateNoOfMines: Function to update the number of mines
  */
 export const useBoardContext = () => {
-	const { noOfCells, noOfMines, cellMap, dispatch } = useContext(BoardContext);
+	const { noOfCells, noOfMines, cellMap, gameStatus, dispatch, gameId } =
+		useContext(BoardContext);
 
 	/**
 	 * Updates the number of cells in the board.
@@ -87,12 +109,31 @@ export const useBoardContext = () => {
 		});
 	};
 
+	/**
+	 * Updates the game status in the board.
+	 * @param {GameStatusType} gameStatus - The new game status
+	 */
+	const updateGameStatus = (gameStatus: GameStatusType) => {
+		dispatch({
+			type: boardActions.UPDATE_GAME_STATUS,
+			payload: gameStatus,
+		});
+	};
+
+	const resetGame = () => {
+		dispatch({ type: boardActions.RESET_GAME, payload: null });
+	};
+
 	return {
 		noOfCells,
 		noOfMines,
 		cellMap,
+		gameStatus,
+		gameId,
 		updateNoOfCells,
 		updateNoOfMines,
 		updateCellMap,
+		updateGameStatus,
+		resetGame,
 	};
 };

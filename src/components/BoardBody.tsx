@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Cell } from "@/components";
 import { CellType } from "@/ulti/types";
+import { useBoardContext } from "@/ulti/hooks";
 
 interface BoardBodyProps {
 	cellMap: CellType[][];
@@ -13,21 +14,34 @@ export default function BoardBody({
 	setMinesLeft,
 	minesLeft,
 }: BoardBodyProps) {
+	const { updateGameStatus, gameStatus } = useBoardContext();
 	const [localCellMap, setLocalCellMap] = useState(cellMap);
 
 	const handleClick = (rowIndex: number, colIndex: number) => {
+		//if the game is lost - ignore
+		if (gameStatus === "lost") return;
+
+		//get the cell from the local cell map
+		const cell = localCellMap[rowIndex][colIndex];
+
+		//if the cell is already revealed or flagged - ignore
+		if (cell.isRevealed || cell.isFlagged) return;
+
+		//if the cell is a mine - update the game status to lost
+		if (cell.isMine) {
+			updateGameStatus("lost");
+			cell.isRevealed = true;
+			return;
+		}
+
 		//copy the cell map to another value
 		const newCellMap = localCellMap.map((row) =>
 			row.map((cell) => ({ ...cell }))
 		);
 
-		const cell = newCellMap[rowIndex][colIndex];
-		if (cell.isRevealed || cell.isFlagged) return;
-
 		//make the cell revealed
 		cell.isRevealed = true;
 		newCellMap[rowIndex][colIndex] = { ...cell };
-		console.log({ newCellMap });
 
 		setLocalCellMap(newCellMap);
 	};
