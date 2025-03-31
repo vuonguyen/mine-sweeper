@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Cell } from "@/components";
 import { CellType } from "@/ulti/types";
 import { useBoardContext } from "@/ulti/hooks";
+import { revealCellAround0 } from "@/ulti";
 
 interface BoardBodyProps {
 	cellMap: CellType[][];
@@ -34,25 +35,35 @@ export default function BoardBody({
 			return;
 		}
 
+		//make the cell revealed
+		cell.isRevealed = true;
+
+		//if the cell is a 0, reveal the cells around it
+		// if (cell.noOfMinesAround === 0) {
+		// 	const updatedCellMap = revealCellAround0(
+		// 		localCellMap,
+		// 		rowIndex,
+		// 		colIndex
+		// 	);
+		// 	updatedCellMap[rowIndex][colIndex] = { ...cell };
+		// 	setLocalCellMap(updatedCellMap);
+		// } else {
 		//copy the cell map to another value
 		const newCellMap = localCellMap.map((row) =>
 			row.map((cell) => ({ ...cell }))
 		);
-
-		//make the cell revealed
-		cell.isRevealed = true;
 		newCellMap[rowIndex][colIndex] = { ...cell };
-
 		setLocalCellMap(newCellMap);
+		// }
 	};
 
 	const handleRightClick = (rowIndex: number, colIndex: number) => {
+		const cell = localCellMap[rowIndex][colIndex];
+		if (cell.isRevealed) return; //if the cell is already revealed - ignore
+
 		const newCellMap = localCellMap.map((row) =>
 			row.map((cell) => ({ ...cell }))
 		);
-
-		const cell = newCellMap[rowIndex][colIndex];
-		if (cell.isRevealed) return; //if the cell is already revealed - ignore
 
 		//if the cell is already flagged, turn it into unflagged and increase the mines
 		if (cell.isFlagged) {

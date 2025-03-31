@@ -86,6 +86,27 @@ export const calculateNoOfMinesAround = (
 	return noOfMines;
 };
 
+export const revealCellAround0 = (
+	board: CellType[][],
+	rowIndex: number,
+	colIndex: number
+): CellType[][] => {
+	for (let row = rowIndex - 1; row <= rowIndex + 1; row++) {
+		if (board[row]) {
+			for (let col = colIndex - 1; col <= colIndex + 1; col++) {
+				if (board[row][col]) {
+					board[row][col].isRevealed = true;
+					if (board[row][col].noOfMinesAround === 0) {
+						//	revealCellAround0(board, row, col);
+					}
+				}
+			}
+		}
+	}
+
+	return board;
+};
+
 export const formatTimer = (timer: number) => {
 	return timer.toString().padStart(3, "0");
 };

@@ -22,7 +22,9 @@ export default function Cell({
 
 	return (
 		<button
-			className='cell'
+			className={`cell cell-${
+				cell.isRevealed ? (cell.isMine ? "mine" : cell.noOfMinesAround) : ""
+			}`}
 			onContextMenu={handleContextMenu}
 			onClick={() => {
 				handleClick(rowIndex, colIndex);

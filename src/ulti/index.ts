@@ -6,6 +6,7 @@ export {
 	boardActions,
 	formatTimer,
 	calculateNoOfMinesAround,
+	revealCellAround0,
 } from "./helpers";
 
 //context
